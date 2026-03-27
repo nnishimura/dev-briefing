@@ -1,0 +1,29 @@
+name: Daily Habbit
+
+on:
+  schedule:
+    - cron: "0 16 * * *" # 09:00 America/Los_Angeles (UTC-7). Adjust as needed.
+  workflow_dispatch: {}
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup uv
+        uses: astral-sh/setup-uv@v3
+        with:
+          python-version: "3.14"
+
+      - name: Run habbit
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          OPENAI_MODEL: gpt-5-mini
+          PUSHBULLET_TOKEN: ${{ secrets.PUSHBULLET_TOKEN }}
+          PUSHBULLET_DEVICE_IDEN: ${{ secrets.PUSHBULLET_DEVICE_IDEN }}
+          LOG_LEVEL: INFO
+          TIMEZONE: America/Los_Angeles
+        run: uv run habbit
