@@ -1,6 +1,6 @@
 {
   "timezone": "America/Los_Angeles",
-  "last_sent_date": "2026-03-26",
+  "last_sent_date": null,
   "sent": [
     {
       "title": "A Systematic Review of Key Retrieval-Augmented Generation (RAG) Systems: Progress, Gaps, and Future Directions",
