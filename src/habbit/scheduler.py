@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import logging
 from datetime import datetime
 from zoneinfo import ZoneInfo
 
@@ -16,11 +17,19 @@ def run_daily(*, dry_run: bool = False) -> None:
     today = now.date().isoformat()
 
     if state.last_sent_date == today:
+        logging.info("Already sent for %s. Skipping.", today)
         return
 
     topics = load_topics()
+    logging.info("Loaded %d topics.", len(topics))
     candidates = search_candidates(topics)
+    logging.info("Found %d candidate items.", len(candidates))
     curated = curate_items(candidates, target_count=5)
+    logging.info("Curated %d items.", len(curated))
+
+    if not curated:
+        logging.warning("No curated items available. Skipping send.")
+        return
 
     if not dry_run:
         send_daily_note(curated, now=now)
