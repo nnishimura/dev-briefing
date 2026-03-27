@@ -14,7 +14,7 @@ Daily curated learning notifications (YouTube + tech blogs) delivered via Pushbu
    - `OPENAI_MODEL` (recommended: `gpt-5-mini`)
    - `PUSHBULLET_TOKEN`
    - `PUSHBULLET_DEVICE_IDEN` (optional)
-2. Edit topics in `/Users/naokonishimura/git/habbit/.ai/topics.txt`
+2. Edit topics in `/Users/naokonishimura/git/habbit/topics.txt`
 
 ## Send Notification Manually
 ```bash
@@ -32,7 +32,7 @@ uv run habbit --pushbullet-test
 ```
 
 If you need to re-send on the same day, set `"last_sent_date": null` in
-`/Users/naokonishimura/git/habbit/.ai/state.json` and re-run.
+`/Users/naokonishimura/git/habbit/state.json` and re-run.
 
 ## Cron Setup
 1. Find `uv` path:
@@ -41,7 +41,7 @@ which uv
 ```
 2. Add a cron entry (example: 8:00am daily). Replace `/ABS/PATH/TO/uv` with the output of `which uv`:
 ```bash
-0 19 * * * cd /Users/naokonishimura/git/habbit && OPENAI_MODEL=gpt-5-mini LOG_LEVEL=INFO /ABS/PATH/TO/uv run habbit >> /Users/naokonishimura/git/habbit/.ai/cron.log 2>&1
+0 19 * * * cd /Users/naokonishimura/git/habbit && OPENAI_MODEL=gpt-5-mini LOG_LEVEL=INFO /ABS/PATH/TO/uv run habbit >> /Users/naokonishimura/git/habbit/cron.log 2>&1
 ```
 
 ## GitHub Actions (Scheduled)
@@ -54,5 +54,5 @@ which uv
 4. You can also run it manually from GitHub Actions via **Run workflow**.
 
 ## Notes
-- The scheduler enforces at-most-once delivery per day using `/Users/naokonishimura/git/habbit/.ai/state.json`.
+- The scheduler enforces at-most-once delivery per day using `/Users/naokonishimura/git/habbit/state.json`.
 - Logs are controlled by `LOG_LEVEL` (e.g., `INFO`, `DEBUG`).

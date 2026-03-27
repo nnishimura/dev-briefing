@@ -38,7 +38,7 @@ def repo_root() -> Path:
 
 
 def state_path() -> Path:
-    return repo_root() / ".ai" / "state.json"
+    return repo_root() / "state.json"
 
 
 def load_state() -> State:

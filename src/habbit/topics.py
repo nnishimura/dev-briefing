@@ -8,7 +8,7 @@ def repo_root() -> Path:
 
 
 def topics_path() -> Path:
-    return repo_root() / ".ai" / "topics.txt"
+    return repo_root() / "topics.txt"
 
 
 def load_topics() -> list[str]:

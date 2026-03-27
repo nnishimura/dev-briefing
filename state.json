@@ -1,0 +1,41 @@
+{
+  "timezone": "America/Los_Angeles",
+  "last_sent_date": "2026-03-26",
+  "sent": [
+    {
+      "title": "A Systematic Review of Key Retrieval-Augmented Generation (RAG) Systems: Progress, Gaps, and Future Directions",
+      "url": "https://arxiv.org/abs/2507.18910",
+      "source": "blog",
+      "date_found": "2026-03-26",
+      "date_sent": "2026-03-26"
+    },
+    {
+      "title": "Nuclia \u2014 RAG quality metrics to ensure trustworthy results",
+      "url": "https://nuclia.com/rag-quality/",
+      "source": "blog",
+      "date_found": "2026-03-26",
+      "date_sent": "2026-03-26"
+    },
+    {
+      "title": "RAG for Streaming Data | Dynamic Sources",
+      "url": "https://apxml.com/courses/large-scale-distributed-rag/chapter-6-advanced-rag-architectures-techniques/rag-dynamic-streaming-data",
+      "source": "blog",
+      "date_found": "2026-03-26",
+      "date_sent": "2026-03-26"
+    },
+    {
+      "title": "Temporal Vector Stores - Indexing Scraped Data by Time and Context",
+      "url": "https://scrapingant.com/blog/temporal-vector-stores-indexing-scraped-data-by-time-and",
+      "source": "blog",
+      "date_found": "2026-03-26",
+      "date_sent": "2026-03-26"
+    },
+    {
+      "title": "Complete RAG Crash Course With LangChain in 2 Hours (Krish Naik)",
+      "url": "https://www.youtube.com/watch?v=o126p1QN_RI",
+      "source": "youtube",
+      "date_found": "2026-03-26",
+      "date_sent": "2026-03-26"
+    }
+  ]
+}

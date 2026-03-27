@@ -26,8 +26,8 @@ It incorporates relevant product decisions from `.ai/PRODUCT.md`.
   - `curate.py` ranking + filtering logic
   - `store.py` URL cache + metadata
   - `pushbullet.py` push notifications
-- `.ai/topics.txt` user-editable topics list
-- `.ai/state.json` cache of sent URLs and metadata
+- `topics.txt` user-editable topics list
+- `state.json` cache of sent URLs and metadata
 - `.env` secrets (not committed)
 
 ## Configuration
@@ -39,12 +39,12 @@ Environment variables:
 - `PUSHBULLET_DEVICE_IDEN` (optional)
 
 Files:
-- `.ai/topics.txt` (one topic per line)
-- `.ai/state.json` (cache of sent URLs + metadata)
+- `topics.txt` (one topic per line)
+- `state.json` (cache of sent URLs + metadata)
 
 ## Scheduling
 - Run once per day with cron or a systemd timer.
-- Enforce at-most-once delivery with `.ai/state.json`:
+- Enforce at-most-once delivery with `state.json`:
   - If a run already sent today (local time), skip.
 
 ## Data Model
@@ -65,14 +65,15 @@ State object (JSON):
 ```
 
 ## Discovery + Curation Flow
-1. Load topics from `.ai/topics.txt`.
+1. Load topics from `topics.txt`.
+1. Load topics from `topics.txt`.
 2. For each topic, issue OpenAI web search requests for:
    - YouTube
    - Tech blogs
 3. Normalize results: extract `title`, `url`, `snippet`, `published_at` (if available).
 4. Filter:
    - Keep items within the last 24 hours if publish time is known.
-   - Drop URLs already in `.ai/state.json`.
+   - Drop URLs already in `state.json`.
 5. Force-include:
    - Recent items from `https://www.youtube.com/@CoreDumpped`.
 6. Ask the model to curate:
@@ -83,7 +84,7 @@ State object (JSON):
    - Ensure each item has `title`, `url`, `reason`.
    - Deduplicate by URL and title.
 8. Send Pushbullet note (single daily notification).
-9. Persist updated `.ai/state.json`.
+9. Persist updated `state.json`.
 
 ## OpenAI Web Search Integration
 - Use the Responses API with web search tools enabled.
