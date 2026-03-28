@@ -1,5 +1,5 @@
 [project]
-name = "habbit"
+name = "dev-briefing"
 version = "0.1.0"
 description = "Daily curated tech content notifier"
 readme = "README.md"
@@ -11,7 +11,7 @@ dependencies = [
 ]
 
 [project.scripts]
-habbit = "habbit.main:main"
+dev-briefing = "dev_briefing.main:main"
 
 [build-system]
 requires = ["setuptools>=68"]

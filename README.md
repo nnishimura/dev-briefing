@@ -1,12 +1,13 @@
-# habbit
+# dev-briefing
 
-Daily curated learning notifications (YouTube + tech blogs) delivered via Pushbullet.
+Daily reading contents curated by AI and delivered to your phone via [Pushbullet](https://www.pushbullet.com/), with customizable prompts to tailor what gets curated.
 
 ## Requirements
 - Python 3.14+
 - `uv`
 - OpenAI API key
-- Pushbullet access token (and optional device iden)
+- [Pushbullet](https://www.pushbullet.com/) access token (and optional device iden)
+- Scheduled job runs via GitHub Actions for daily delivery
 
 ## Setup
 1. Create `.env` from `.env.example` and fill:
@@ -34,36 +35,26 @@ Prompt env overrides:
 
 ## Send Notification Manually
 ```bash
-OPENAI_MODEL=gpt-5-mini LOG_LEVEL=INFO uv run habbit
+OPENAI_MODEL=gpt-5-mini LOG_LEVEL=INFO uv run dev-briefing
 ```
 
 Dry run (no Pushbullet send):
 ```bash
-OPENAI_MODEL=gpt-5-mini LOG_LEVEL=INFO uv run habbit --dry-run
+OPENAI_MODEL=gpt-5-mini LOG_LEVEL=INFO uv run dev-briefing --dry-run
 ```
 
 Force send even if already sent today:
 ```bash
-OPENAI_MODEL=gpt-5-mini LOG_LEVEL=INFO uv run habbit --force
+OPENAI_MODEL=gpt-5-mini LOG_LEVEL=INFO uv run dev-briefing --force
 ```
 
 Pushbullet test note:
 ```bash
-uv run habbit --pushbullet-test
+uv run dev-briefing --pushbullet-test
 ```
 
 If you need to re-send on the same day, set `"last_sent_date": null` in
 `state.json` and re-run.
-
-## Cron Setup
-1. Find `uv` path:
-```bash
-which uv
-```
-2. Add a cron entry (example: 8:00am daily). Replace `/ABS/PATH/TO/uv` with the output of `which uv`:
-```bash
-0 19 * * * cd /PATH/TO/habbit && OPENAI_MODEL=gpt-5-mini LOG_LEVEL=INFO /ABS/PATH/TO/uv run habbit >> cron.log 2>&1
-```
 
 ## GitHub Actions (Scheduled)
 1. Add repo secrets:

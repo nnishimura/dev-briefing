@@ -6,9 +6,9 @@ import os
 from datetime import datetime
 from zoneinfo import ZoneInfo
 
-from habbit.pushbullet import send_daily_note
-from habbit.scheduler import run_daily
-from habbit.store import load_state
+from dev_briefing.pushbullet import send_daily_note
+from dev_briefing.scheduler import run_daily
+from dev_briefing.store import load_state
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -65,7 +65,7 @@ def main() -> None:
                 {
                     "title": "Pushbullet test",
                     "url": "https://example.com",
-                    "reason": "Test notification from habbit.",
+                    "reason": "Test notification from dev-briefing.",
                     "source": "test",
                 }
             ],

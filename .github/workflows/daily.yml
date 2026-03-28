@@ -1,4 +1,4 @@
-name: Daily Habbit
+name: Daily dev-briefing
 
 on:
   schedule:
@@ -18,7 +18,7 @@ jobs:
         with:
           python-version: "3.14"
 
-      - name: Run habbit
+      - name: Run dev-briefing
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
           OPENAI_MODEL: gpt-5-mini
@@ -26,4 +26,4 @@ jobs:
           PUSHBULLET_DEVICE_IDEN: ${{ secrets.PUSHBULLET_DEVICE_IDEN }}
           LOG_LEVEL: INFO
           TIMEZONE: America/Los_Angeles
-        run: uv run habbit
+        run: uv run dev-briefing

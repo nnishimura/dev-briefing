@@ -8,7 +8,7 @@ import re
 from dotenv import load_dotenv
 from openai import AuthenticationError, BadRequestError, OpenAI, RateLimitError
 
-from habbit.search import Candidate
+from dev_briefing.search import Candidate
 
 
 def curate_items(candidates: list[Candidate], *, target_count: int) -> list[dict]:

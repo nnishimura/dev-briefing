@@ -4,11 +4,11 @@ import logging
 from datetime import datetime
 from zoneinfo import ZoneInfo
 
-from habbit.curate import curate_items
-from habbit.search import search_candidates
-from habbit.store import load_state, save_state
-from habbit.topics import load_topics
-from habbit.pushbullet import send_daily_note
+from dev_briefing.curate import curate_items
+from dev_briefing.search import search_candidates
+from dev_briefing.store import load_state, save_state
+from dev_briefing.topics import load_topics
+from dev_briefing.pushbullet import send_daily_note
 
 
 def run_daily(
