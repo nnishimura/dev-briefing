@@ -2,6 +2,8 @@
 
 Daily reading contents curated by AI and delivered to your phone via [Pushbullet](https://www.pushbullet.com/), with customizable prompts to tailor what gets curated.
 
+Minimal setup & low operational cost (free aside from OpenAI usage)
+
 ## Requirements
 - Python 3.14+
 - `uv`
@@ -35,22 +37,22 @@ Prompt env overrides:
 
 ## Send Notification Manually
 ```bash
-OPENAI_MODEL=gpt-5-mini LOG_LEVEL=INFO uv run dev-briefing
+OPENAI_MODEL=gpt-5-mini LOG_LEVEL=INFO uv run habbit
 ```
 
 Dry run (no Pushbullet send):
 ```bash
-OPENAI_MODEL=gpt-5-mini LOG_LEVEL=INFO uv run dev-briefing --dry-run
+OPENAI_MODEL=gpt-5-mini LOG_LEVEL=INFO uv run habbit --dry-run
 ```
 
 Force send even if already sent today:
 ```bash
-OPENAI_MODEL=gpt-5-mini LOG_LEVEL=INFO uv run dev-briefing --force
+OPENAI_MODEL=gpt-5-mini LOG_LEVEL=INFO uv run habbit --force
 ```
 
 Pushbullet test note:
 ```bash
-uv run dev-briefing --pushbullet-test
+uv run habbit --pushbullet-test
 ```
 
 If you need to re-send on the same day, set `"last_sent_date": null` in
