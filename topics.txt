@@ -1,4 +1,6 @@
-llm engineering
-ai product development
 RAG system
+postgres internals
+distributed systems
+data engineering
+
 

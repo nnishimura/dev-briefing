@@ -37,12 +37,14 @@ def repo_root() -> Path:
     return Path(__file__).resolve().parents[2]
 
 
-def state_path() -> Path:
+def state_path(path_override: str | None = None) -> Path:
+    if path_override:
+        return Path(path_override)
     return repo_root() / "state.json"
 
 
-def load_state() -> State:
-    path = state_path()
+def load_state(path_override: str | None = None) -> State:
+    path = state_path(path_override)
     if not path.exists():
         return State()
     data = json.loads(path.read_text())
@@ -63,7 +65,7 @@ def load_state() -> State:
     return state
 
 
-def save_state(state: State) -> None:
+def save_state(state: State, path_override: str | None = None) -> None:
     data = {
         "timezone": state.timezone,
         "last_sent_date": state.last_sent_date,
@@ -78,5 +80,5 @@ def save_state(state: State) -> None:
             for item in state.sent
         ],
     }
-    path = state_path()
+    path = state_path(path_override)
     path.write_text(json.dumps(data, indent=2))

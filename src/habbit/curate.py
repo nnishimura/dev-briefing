@@ -31,14 +31,7 @@ def curate_items(candidates: list[Candidate], *, target_count: int) -> list[dict
         for c in candidates
     ]
 
-    prompt = (
-        "You are curating a daily list of technical learning content. "
-        f"Select exactly {target_count} items. "
-        "Return ONLY JSON with this shape: {\"items\": [ ... ]}. "
-        "Each item must include: title, url, reason, source. "
-        "Reasons should be 1-2 sentences. "
-        "If fewer than the target are good, return fewer."
-    )
+    prompt = _build_curate_prompt(target_count)
 
     try:
         response = client.responses.create(
@@ -82,6 +75,24 @@ def curate_items(candidates: list[Candidate], *, target_count: int) -> list[dict
             }
         )
     return cleaned[:target_count]
+
+
+def _build_curate_prompt(target_count: int) -> str:
+    override = os.getenv("CURATE_PROMPT")
+    if override:
+        try:
+            return override.format(target_count=target_count)
+        except (KeyError, ValueError):
+            logging.warning("CURATE_PROMPT formatting failed. Falling back to default.")
+    return (
+        "You are curating a daily list of technical learning content for a senior backend engineer. "
+        f"Select exactly {target_count} items. Prefer depth, practical production insights, "
+        "and material that builds long-term systems knowledge. "
+        "Return ONLY JSON with this shape: {\"items\": [ ... ]}. "
+        "Each item must include: title, url, reason, source. "
+        "Reasons should be 1-2 sentences and focus on why it helps a senior backend engineer learn. "
+        "If fewer than the target are good, return fewer."
+    )
 
 
 def _parse_items(text: str) -> list:

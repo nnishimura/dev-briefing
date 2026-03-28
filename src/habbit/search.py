@@ -28,16 +28,7 @@ def search_candidates(topics: list[str]) -> list[Candidate]:
     client = OpenAI()
     model = os.getenv("OPENAI_MODEL", "gpt-5-mini").strip().lower()
 
-    prompt = (
-        "You are a researcher. Search the web for recent items (prefer last 24 hours) "
-        "matching the topics below. Include YouTube videos and tech blog articles. "
-        "If exact publish time is not available, still include likely-recent items "
-        "and leave published_at null. Always include recent items from "
-        "https://www.youtube.com/@CoreDumpped if any. "
-        "Return ONLY JSON with this shape: {\"items\": [ ... ]}. Each item object must include: "
-        "title, url, source (youtube|blog), snippet, published_at (ISO date if known)."
-        "\n\nTopics:\n- " + "\n- ".join(topics)
-    )
+    prompt = _build_search_prompt(topics)
 
     try:
         response = client.responses.create(
@@ -85,6 +76,29 @@ def search_candidates(topics: list[str]) -> list[Candidate]:
             )
         )
     return candidates
+
+
+def _build_search_prompt(topics: list[str]) -> str:
+    override = os.getenv("SEARCH_PROMPT")
+    topics_block = "\n- " + "\n- ".join(topics)
+    if override:
+        try:
+            return override.format(topics=topics_block)
+        except (KeyError, ValueError):
+            logging.warning("SEARCH_PROMPT formatting failed. Falling back to default.")
+    return (
+        "You are a researcher curating learning material for a senior backend engineer. "
+        "Search the web for recent items (prefer last 24 hours) that will help them "
+        "learn the given topics. Favor deep technical content, architecture write-ups, "
+        "scalability/performance discussions, and production-grade lessons. "
+        "Include YouTube videos and tech blog articles. "
+        "If exact publish time is not available, still include likely-recent items "
+        "and leave published_at null. Always include recent items from "
+        "https://www.youtube.com/@CoreDumpped if any. "
+        "Return ONLY JSON with this shape: {\"items\": [ ... ]}. Each item object must include: "
+        "title, url, source (youtube|blog), snippet, published_at (ISO date if known)."
+        "\n\nTopics:" + topics_block
+    )
 
 
 def _parse_items(text: str) -> list:
