@@ -8,16 +8,17 @@ Minimal setup & low operational cost (free aside from OpenAI usage)
 - Python 3.14+
 - `uv`
 - OpenAI API key
-- [Pushbullet](https://www.pushbullet.com/) access token (and optional device iden)
+- [Pushbullet](https://www.pushbullet.com/) access token & device iden
 - Scheduled job runs via GitHub Actions for daily delivery
 
 ## Setup
-1. Create `.env` from `.env.example` and fill:
+1. Clone this repository
+2. Create `.env` from `.env.example` and fill:
    - `OPENAI_API_KEY`
    - `OPENAI_MODEL` (recommended: `gpt-5-mini`)
-   - `PUSHBULLET_TOKEN`
-   - `PUSHBULLET_DEVICE_IDEN` (optional)
-2. Edit topics in `topics.txt`
+   - `PUSHBULLET_TOKEN` (See [doc](https://docs.pushbullet.com/#api-quick-start) for details)
+   - `PUSHBULLET_DEVICE_IDEN` (optional. Go to pushbullet.com, then the Devices section, you can grab the device_iden for each device by looking at the url.)
+3. Edit topics in `topics.txt`
 
 ## Configuration
 Environment variables (all optional unless noted):
@@ -37,26 +38,18 @@ Prompt env overrides:
 
 ## Send Notification Manually
 ```bash
-OPENAI_MODEL=gpt-5-mini LOG_LEVEL=INFO uv run habbit
+OPENAI_MODEL=gpt-5-mini LOG_LEVEL=INFO uv run dev-briefing
 ```
 
-Dry run (no Pushbullet send):
+Dry run (no Pushbullet notification send):
 ```bash
-OPENAI_MODEL=gpt-5-mini LOG_LEVEL=INFO uv run habbit --dry-run
+OPENAI_MODEL=gpt-5-mini LOG_LEVEL=INFO uv run dev-briefing --dry-run
 ```
 
 Force send even if already sent today:
 ```bash
-OPENAI_MODEL=gpt-5-mini LOG_LEVEL=INFO uv run habbit --force
+OPENAI_MODEL=gpt-5-mini LOG_LEVEL=INFO uv run dev-briefing --force
 ```
-
-Pushbullet test note:
-```bash
-uv run habbit --pushbullet-test
-```
-
-If you need to re-send on the same day, set `"last_sent_date": null` in
-`state.json` and re-run.
 
 ## GitHub Actions (Scheduled)
 1. Add repo secrets:
@@ -66,7 +59,3 @@ If you need to re-send on the same day, set `"last_sent_date": null` in
 2. Workflow file: `.github/workflows/daily.yml`
 3. Schedule is set to **09:00 America/Los_Angeles** (cron in UTC). Adjust the cron as needed.
 4. You can also run it manually from GitHub Actions via **Run workflow**.
-
-## Notes
-- The scheduler enforces at-most-once delivery per day using `state.json`.
-- Logs are controlled by `LOG_LEVEL` (e.g., `INFO`, `DEBUG`).
